@@ -73,9 +73,9 @@ document.addEventListener("DOMContentLoaded", function event() {
         // divs = document.getElementsByTagName("div");
     }
     crearTabla();
-    // if(localStorage.getItem('turnos')){
-    //     getTurnos();
-    // }
+    if(localStorage.getItem('turnos')){
+        getTurnos();
+    }
     window.addEventListener('storage', function() {
         getTurnos();
     });
