@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function event() {
     crearTabla();
     if(localStorage.getItem('turnos')){
         getTurnos();
-    
+    }
     window.addEventListener('storage', function() {
         getTurnos();
     });
