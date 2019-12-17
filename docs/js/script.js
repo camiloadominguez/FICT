@@ -1,30 +1,27 @@
-const id_DOM = (dom) => {
-    return document.getElementById(dom)
-}
 const con = console.log;
+let dia;
 let fechaExcel = new Date();
 let day, month,year, ConverToXlsx, wbout, libroDeTrabajo;
 let arrIds = [];
-let filas, contadorHoras, z = 0;
-let fecha, hour, minute, second, audio;
-let ident, clase, filHora, colCampo, campoMini, anchoP, anchoM, horaTurno;
-let HTMLProfesor, HTMLMonitor, HTMLInputs;
-let inputAccion, inputNombre, casillaFichero, avtiva1, activa2,valor;
+let filas, contadorHoras, z;
+let date, minute, second, audio;
+let ident, clase, filHora, colCampo, campoMini, horaTurno;
+let HTMLProfesor, HTMLMonitor;
+let inputAccion, inputNombre, casillaFichero, activa1, activa2,valor;
 let contHoja = []; 
-let inc, idTurno;
+let idTurno;
+let incFecha=0;
+fechasTurnos1=[];
+lt=[];
+let inc=5;
 listadoTurnos = [];
 let arrMiembros = new Array(8);
 let arrInvitados = new Array(8);
 let arrProfesores = new Array(4);
 let arrMonitores = new Array(4);
-datosTurno = [];
-prueba=[];
-arrTurnos=[];
-idT = cp = hr = s1 = ac1 = s2 = ac2 = s3 = ac3 = s4 = ac4 = i1 = ai1 = i2 = ai2 = i3 = ai3 = i4 = ai4 = p1 = p2 = p3 = p4 = m1 = m2 = m3 = m4 = idC ='';
-encabezadoExcel = ['campo','hora','miembro_1', 'miembro_2','miembro_3','miembro_4','invitado_1', 'invitado_2','invitado_3','invitado_4','profesor_1', 'profesor_2','profesor_3','profesor_4','monitor_1', 'monitor_2','monitor_3','monitor_4','accion'];
+// idT = cp = hr = s1 = ac1 = s2 = ac2 = s3 = ac3 = s4 = ac4 = i1 = ai1 = i2 = ai2 = i3 = ai3 = i4 = ai4 = p1 = p2 = p3 = p4 = m1 = m2 = m3 = m4 = idC ='';
 contExcel=[];
 // profesores y monitores
-let monitores = [], profesores = [];
     personas=[
     {"nombre" : "Camilo Dominguez", "rol":"monitor",    "codigo":"m_1"},
     {"nombre" : "Andres Murcia",    "rol":"monitor",    "codigo":"m_2"},
@@ -37,7 +34,9 @@ let monitores = [], profesores = [];
     {"nombre" : "Jhon Ruiz",        "rol":"monitor",    "codigo":"m_5"},
     {"nombre" : "Michael Ruiz",     "rol":"monitor",    "codigo":"m_6"},
     {"nombre" : "Camilo Roa",       "rol":"profesor",   "codigo":"p_5"},
-    {"nombre" : "Wilson Ramirez",   "rol":"profesor",   "codigo":"p_6"}
+    {"nombre" : "Wilson Ramirez",   "rol":"profesor",   "codigo":"p_6"},
+    {"nombre" : "Diego Isaza",      "rol":"monitor",    "codigo":"m_7"},
+    {"nombre" : "Albeiro Sierra",   "rol":"profesor",   "codigo":"p_7"}
 ]
 
 document.addEventListener("DOMContentLoaded", function event() {
@@ -46,52 +45,6 @@ document.addEventListener("DOMContentLoaded", function event() {
                     '<h3>Profesor</h3>';
     HTMLMonitor =   '<img src="svg/user_1.svg" alt="user_1.svg" class="img_user">'+
                     '<h3>Monitor</h3>'; 
-    const crearTabla = () => {
-        filas = id_DOM("campos_y_horas");
-        for (let i = 0; i <= 14; i++) {
-            filas.innerHTML += '<tr></tr>';
-            for (let j = 0; j <= 34; j++) {
-                i == 0
-                    ? document.getElementsByTagName("tr")[i].innerHTML += '<td><div id="fil_' + i + '_col_' + j + '">' + j + '</div></td>'
-                    : document.getElementsByTagName("tr")[i].innerHTML += '<td><div id="fil_' + i + '_col_' + j + '" class="casillas"></div></td>';
-                if (j == 0) {
-                    contadorHoras = i + 5;
-                    if (contadorHoras < 12) {
-                        id_DOM('fil_' + i + '_col_0').classList.remove('casillas');
-                        id_DOM('fil_' + i + '_col_0').innerHTML = contadorHoras + ':00-' + contadorHoras + ':50 AM' ;
-                        id_DOM('fil_' + i + '_col_0').style.width = "6em";
-                    }else if(contadorHoras==12){
-                        id_DOM('fil_' + i + '_col_0').classList.remove('casillas');
-                        id_DOM('fil_' + i + '_col_0').innerHTML = contadorHoras + ':00-' + contadorHoras + ':50 PM' ;
-                        id_DOM('fil_' + i + '_col_0').style.width = "6em";
-                    }
-                    else{
-                        id_DOM('fil_' + i + '_col_0').classList.remove('casillas');
-                        id_DOM('fil_' + i + '_col_0').innerHTML = (contadorHoras - 12) + ':00-' + (contadorHoras - 12) + ':50 PM';
-                        id_DOM('fil_' + i + '_col_0').style.width = "6em";
-                    }
-                    // `${i+5}:00-${i+5}:50`
-                }
-                j % 2 == 0
-                    ? id_DOM('fil_' + i + '_col_' + j).style.backgroundColor = "rgb(55, 179, 70)"
-                    : id_DOM('fil_' + i + '_col_' + j).style.backgroundColor = "palegreen"
-                if (j >= 1 && i >= 1) {
-                    arrIds.push('fil_' + i + '_col_' + j)
-                    if (i > 0 && j == 6){
-                        id_DOM('fil_' + i + '_col_6').classList.remove('casillas')
-                        arrIds.pop();
-                        id_DOM('fil_' + i + '_col_6').classList.add("miniTenis");
-                        for (let k = 0; k < 4; k++) {
-                            id_DOM('fil_' + i + '_col_6').innerHTML += '<div id="mini_' + (++z) + '" class="mini_tenis casillas"></div>';
-                            arrIds.push(`mini_${z}`)
-                        }
-                    }
-                }
-            }
-        }
-        id_DOM('fil_0_col_0').innerHTML="Hora/Campo";
-        // divs = document.getElementsByTagName("div");
-    }
     id_DOM('select_usuario_1').addEventListener('change', (event) => {
         valor = id_DOM('select_usuario_1').value;
         valorSelect(valor, event.target.id);
@@ -108,13 +61,28 @@ document.addEventListener("DOMContentLoaded", function event() {
         valor = id_DOM('select_usuario_4').value;
         valorSelect(valor, event.target.id);
     });
+    
+    dia = fechaActual();
+    id_DOM('calendario').value = dia;
     crearTabla();
     HTMLPyM();
     recorrerJson();
-    if(localStorage.getItem('turnos')){
-        getTurnos();
+    if(localStorage.getItem(dia)){
+        getTurnos(dia);
     }
+    id_DOM('calendario').addEventListener('change',(event)=>{
+        dia = id_DOM(event.target.id).value;
+        listadoTurnos=[];
+        for(let i of arrIds){
+            id_DOM(i).innerHTML="";
+            id_DOM(i).title="";
+        }
+        // location.reload();
+        if(localStorage.getItem(dia)){
+            getTurnos(dia);
+        }
 
+    });
     document.addEventListener('mousedown', function (e) {
         ident = e.target.id;
         clase = e.target.classList;
@@ -150,44 +118,13 @@ document.addEventListener("DOMContentLoaded", function event() {
     });
     
     // ++++++++++++++++++++++++++++++++++ excel ++++++++++++++++++++++++
-    day = fechaExcel.getDate();
-    month=fechaExcel.getMonth()+1;
-    year= fechaExcel.getFullYear();
-    dia = day+'-'+month+'-'+year;
-    libroDeTrabajo = XLSX.utils.book_new();
-    libroDeTrabajo.Props = {
-            Title: "Descarga de Excel",
-            Subject: "Prueba",
-            Author: "CADS",
-            CreatedDate: new Date()
-    };
-    libroDeTrabajo.SheetNames.push(dia);
-    // let ws_data = [["hello","world",'cads', 'codigo']];
-    // let ws = XLSX.utils.aoa_to_sheet(ws_data);
-    contHoja = [["Nombre","Rol",'Codigo']];
-    for(let i=0;i<personas.length;i++){
-        contHoja.push([personas[i].nombre, personas[i].rol, personas[i].codigo]);
-    }
-    // libroDeTrabajo.Sheets[dia] = contHoja;
-    ConverToXlsx = XLSX.utils.aoa_to_sheet(contHoja);
-    libroDeTrabajo.Sheets[dia] = ConverToXlsx;
-    wbout = XLSX.write(libroDeTrabajo, {bookType:'xlsx',  type: 'binary'});
-    function s2ab(s) {
-            let buf = new ArrayBuffer(s.length);
-            let view = new Uint8Array(buf);
-            for (let i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
-            return buf; 
-    }
-    id_DOM("button-a").addEventListener('click',()=>{
-            saveAs(new Blob([s2ab(wbout)]), 'Noviembre.xlsx');
-    }); 
+     
     //   ++++++++++++++++++++timbre++++++++++++++++++
     audio = id_DOM("aud_timbre2");
     setInterval(() => {
-        fecha = new Date();
-        // hour    =   fecha.getHours();
-        minute = fecha.getMinutes();
-        second = fecha.getSeconds();
+        date = new Date();
+        minute = date.getMinutes();
+        second = date.getSeconds();
         if (second == "00" && minute == "00") { audio.play() }
     }, 1000);
 });
@@ -225,6 +162,7 @@ function cerrarTodo(){
         // id_DOM('input_accion_'+i).value='';
         id_DOM('inner_profesor_'+i).classList.remove('true');
         id_DOM('inner_monitor_'+i).classList.remove('true');
+        id_DOM('usuario_'+i).classList.remove('active');
     }
     HTMLPyM();
 }
@@ -237,7 +175,6 @@ function inputSingles(){
         document.getElementsByClassName('select_modalidad')[0].classList.add('active');
     }
     else if(activa1 && activa2){
-        // document.getElementsByClassName('select_modalidad')[0].classList.add('active');
         document.getElementsByClassName('select_modalidad')[1].classList.remove('active');
         for(let i=3;i<=4;i++){
             id_DOM('select_profesor_'+i).classList.remove('active');
@@ -249,6 +186,7 @@ function inputSingles(){
             document.getElementsByClassName('cont_inputs')[i-1].classList.remove('active');
             id_DOM('inner_profesor_'+i).classList.remove('true');
             id_DOM('inner_monitor_'+i).classList.remove('true');
+            id_DOM('usuario_'+i).classList.remove('active');
         }
     }
     else{
@@ -264,6 +202,7 @@ function inputSingles(){
             id_DOM('inner_monitor_'+i).classList.remove('true');
             if(i<3){
                 document.getElementsByClassName('cont_inputs')[i-1].classList.remove('active');
+                id_DOM('usuario_'+i).classList.remove('active');
             }
         }
     }
@@ -288,6 +227,7 @@ const inputDoubles = () => {
             document.getElementsByClassName('cont_inputs')[i-1].classList.remove('active');
             id_DOM('inner_profesor_'+i).classList.remove('true');
             id_DOM('inner_monitor_'+i).classList.remove('true');
+            id_DOM('usuario_'+i).classList.remove('active');
         }
     }
     else{
@@ -297,23 +237,27 @@ const inputDoubles = () => {
 }
 function valorSelect(valor, id_select){
     id_select = event.target.id.substr(-1);
-    if(valor === 'miembro'){   
+    if(valor === 'miembro'){
+        id_DOM('usuario_'+id_select).classList.add('active')
         id_DOM('select_usuario_'+id_select).classList.add('active');
         id_DOM('input_nombre_'+id_select).placeholder='Nombre '+valor;
         // id_DOM(document.getElementsByClassName('cont_inputs')[id_select-1].getElementsByTagName('input')[0].id).placeholder='Nombre ' + valor;
         document.getElementsByClassName('cont_inputs')[id_select-1].classList.add('active');
     }
     else if(valor === 'invitado'){
+        id_DOM('usuario_'+id_select).classList.add('active')
         id_DOM('select_usuario_'+id_select).classList.add('active');
         id_DOM(document.getElementsByClassName('cont_inputs')[id_select-1].getElementsByTagName('input')[0].id).placeholder='Nombre ' + valor;
         document.getElementsByClassName('cont_inputs')[id_select-1].classList.add('active');
     }
     else if(valor === 'profesor'){
+        id_DOM('usuario_'+id_select).classList.add('active')
         id_DOM('select_usuario_'+id_select).classList.add('active');
         id_DOM('select_profesor_'+id_select).classList.add('active');
         document.getElementsByClassName('inner_profesor')[id_select-1].innerHTML = HTMLProfesor;
     }
     else if(valor === 'monitor'){
+        id_DOM('usuario_'+id_select).classList.add('active')
         id_DOM('select_usuario_'+id_select).classList.add('active');
         id_DOM('select_monitor_'+id_select).classList.add('active');
         document.getElementsByClassName('inner_monitor')[id_select-1].innerHTML = HTMLMonitor;
@@ -345,10 +289,15 @@ function desplegarOpciones(attrElemento){
     id_DOM('opciones_'+indice).classList.toggle('active');
 }
 function guardarRegistro(){
+    valId=false;
     valDatos=true;
     activa1 = document.getElementsByClassName('select_modalidad')[0].classList.contains('active');
-    activa2 = document.getElementsByClassName('select_modalidad')[1].classList.contains('active')
-    if(activa1 && activa2)
+    activa2 = document.getElementsByClassName('select_modalidad')[1].classList.contains('active');
+    ActiveUser1 = id_DOM('usuario_1').classList.contains('active');
+    ActiveUser2 = id_DOM('usuario_2').classList.contains('active');
+    ActiveUser3 = id_DOM('usuario_3').classList.contains('active');
+    ActiveUser4 = id_DOM('usuario_4').classList.contains('active');
+    if(activa1 && activa2 && ActiveUser1 && ActiveUser2 && ActiveUser3 && ActiveUser4)
     {
         incS=0;
         incI=0;
@@ -412,7 +361,7 @@ function guardarRegistro(){
             }
         }
     }
-    else if(activa1 && !activa2){
+    else if(activa1 && !activa2 && ActiveUser1 && ActiveUser2){
         incS=0;
         incI=0;
         incPr=0;
@@ -475,13 +424,25 @@ function guardarRegistro(){
         }
     }
     else{
-        alert('No has agrado ningun contenido');
+        alert('No has agreado ningun contenido');
         valDatos=false;
     }
     if(valDatos){
-        idTurno = listadoTurnos.length;
+        if(id_DOM(casillaFichero).title!=''){
+            for(let i=0;i<listadoTurnos.length;i++){
+                if(listadoTurnos[i].id_casilla.indexOf(casillaFichero)!=-1){
+                    idTurno=listadoTurnos[i].id_turno
+                    listadoTurnos.splice(i,1);
+                    valId=true;
+                }
+            }
+            id_DOM(casillaFichero).title='';
+            id_DOM(casillaFichero).innerHTML='';
+        }
+        if(!valId){
+            idTurno = listadoTurnos.length;
+        }
         contExcel = contExcel.concat(idTurno,colCampo,horaTurno,arrMiembros,arrInvitados,arrProfesores,arrMonitores,casillaFichero);
-        prueba=contExcel;
         let nuevoTurno = new turno(contExcel);
         listadoTurnos.push(nuevoTurno);
         arrMiembros = new Array(8);
@@ -491,16 +452,105 @@ function guardarRegistro(){
         imprimirTurnos(listadoTurnos, listadoTurnos.length-1);
         contExcel=[];
         idTurno++;
-        localStorage.setItem('turnos',JSON.stringify(listadoTurnos))
+        localStorage.setItem(dia,JSON.stringify(listadoTurnos))
         cerrarTodo();
+        valFechas();
         // imprimir en pantalla
 
     }
 }
+const crearTabla = () => {
+    z=0;
+    filas = id_DOM("campos_y_horas");
+    for (let i = 0; i <= 14; i++) {
+        filas.innerHTML += '<tr></tr>';
+        for (let j = 0; j <= 34; j++) {
+            i == 0
+                ? document.getElementsByTagName("tr")[i].innerHTML += '<td><div id="fil_' + i + '_col_' + j + '">' + j + '</div></td>'
+                : document.getElementsByTagName("tr")[i].innerHTML += '<td><div id="fil_' + i + '_col_' + j + '" class="casillas"></div></td>';
+            if (j == 0) {
+                contadorHoras = i + 5;
+                if (contadorHoras < 12) {
+                    id_DOM('fil_' + i + '_col_0').classList.remove('casillas');
+                    id_DOM('fil_' + i + '_col_0').innerHTML = contadorHoras + ':00-' + contadorHoras + ':50 AM' ;
+                    id_DOM('fil_' + i + '_col_0').style.width = "6em";
+                }else if(contadorHoras==12){
+                    id_DOM('fil_' + i + '_col_0').classList.remove('casillas');
+                    id_DOM('fil_' + i + '_col_0').innerHTML = contadorHoras + ':00-' + contadorHoras + ':50 PM' ;
+                    id_DOM('fil_' + i + '_col_0').style.width = "6em";
+                }
+                else{
+                    id_DOM('fil_' + i + '_col_0').classList.remove('casillas');
+                    id_DOM('fil_' + i + '_col_0').innerHTML = (contadorHoras - 12) + ':00-' + (contadorHoras - 12) + ':50 PM';
+                    id_DOM('fil_' + i + '_col_0').style.width = "6em";
+                }
+                // `${i+5}:00-${i+5}:50`
+            }
+            j % 2 == 0
+                ? id_DOM('fil_' + i + '_col_' + j).style.backgroundColor = "rgb(55, 179, 70)"
+                : id_DOM('fil_' + i + '_col_' + j).style.backgroundColor = "palegreen"
+            if (j >= 1 && i >= 1) {
+                arrIds.push('fil_' + i + '_col_' + j)
+                if (i > 0 && j == 6){
+                    id_DOM('fil_' + i + '_col_6').classList.remove('casillas')
+                    arrIds.pop();
+                    id_DOM('fil_' + i + '_col_6').classList.add("miniTenis");
+                    for (let k = 0; k < 4; k++) {
+                        id_DOM('fil_' + i + '_col_6').innerHTML += '<div id="mini_' + (++z) + '" class="mini_tenis casillas"></div>';
+                        arrIds.push(`mini_${z}`)
+                    }
+                }
+            }
+        }
+    }
+    id_DOM('fil_0_col_0').innerHTML="Hora/Campo";
+    // divs = document.getElementsByTagName("div");
+}
+
+function guardarExcel(){
+    // day = fechaExcel.getDate();
+    // month=fechaExcel.getMonth()+1;
+    // year= fechaExcel.getFullYear();
+    // dia = day+'-'+month+'-'+year;
+    libroDeTrabajo = XLSX.utils.book_new();
+    libroDeTrabajo.Props = {
+            Title: "Descarga de Excel",
+            Subject: "Prueba",
+            Author: "CADS",
+            CreatedDate: new Date()
+    };
+    libroDeTrabajo.SheetNames.push(dia);
+    // let ws_data = [["hello","world",'cads', 'codigo']];
+    // let ws = XLSX.utils.aoa_to_sheet(ws_data);
+    encabezadoExcel = [['campo','hora',
+    'miembro_1','Accion_1','miembro_2','Accion_2','miembro_3','Accion_3','miembro_4','Accion_4',
+    'invitado_1','Accion_inv_1','invitado_2','Accion_inv_2','invitado_3', 'Accion_inv_3','invitado_4','Accion_inv_4',
+    'profesor_1', 'profesor_2','profesor_3','profesor_4','monitor_1', 'monitor_2','monitor_3','monitor_4']];
+    lt=listadoTurnos;
+    for(let i=0;i<lt.length;i++){
+        encabezadoExcel.push([lt[i].campo, lt[i].hora, 
+            lt[i].miembro_1, lt[i].accion_1, lt[i].miembro_2, lt[i].accion_2, lt[i].miembro_3, lt[i].accion_3, lt[i].miembro_4, lt[i].accion_4, 
+            lt[i].invitado_1, lt[i].accionInv_1, lt[i].invitado_2, lt[i].accionInv_2, lt[i].invitado_3, lt[i].accionInv_3, lt[i].invitado_4, lt[i].accionInv_4, 
+            lt[i].profesor_1, lt[i].profesor_2, lt[i].profesor_3, lt[i].profesor_4, lt[i].monitor_1, lt[i].monitor_2, lt[i].monitor_3, lt[i].monitor_4]);
+    }
+    // libroDeTrabajo.Sheets[let ] = contHoja;
+    ConverToXlsx = XLSX.utils.aoa_to_sheet(encabezadoExcel);
+    libroDeTrabajo.Sheets[dia] = ConverToXlsx;
+    wbout = XLSX.write(libroDeTrabajo, {bookType:'xlsx',  type: 'binary'});
+    function s2ab(s) {
+            let buf = new ArrayBuffer(s.length);
+            let view = new Uint8Array(buf);
+            for (let i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf; 
+    }
+    // id_DOM("button-a").addEventListener('click',()=>{
+            saveAs(new Blob([s2ab(wbout)]), dia +'.xlsx');
+    // });
+}
 // *********IMPORTANTE 
 // +++++++Constructor del turno
-function getTurnos(){
-    listadoTurnos = JSON.parse(localStorage.getItem('turnos'));
+function getTurnos(dia){
+    listadoTurnos = JSON.parse(localStorage.getItem(dia));
     imprimirTurnos(listadoTurnos,0);
 }
 
@@ -618,4 +668,34 @@ function imprimirTurnos(nuevoTurno,ind){
             id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].monitor_4+'\n ';
         }
     }
+}
+function fecha(fechas){
+    this.id_fecha=fechas[0];
+    this.fecha_turno=fechas[1];
+
+}
+const id_DOM = (dom) => {
+    return document.getElementById(dom)
+}
+const valFechas=()=>{
+    dia=fechaActual();
+    fechaTemp=[];
+    fechaTemp.push(incFecha++,dia);
+    let nuevaFecha = new fecha(fechaTemp);
+    fechasTurnos1.push(nuevaFecha);
+}
+const fechaActual = () =>{
+    inc++;
+    day = (fechaExcel.getDate()).toString();
+    month=fechaExcel.getMonth()+1;
+    year= fechaExcel.getFullYear();
+    if(day.length==1){
+        day= '0'+day;
+        dia = year+'-'+month+'-'+day
+    }
+    else
+    {
+        dia = year+'-'+month+'-'+day
+    }
+    return dia;
 }

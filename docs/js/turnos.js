@@ -6,20 +6,22 @@ let fechaExcel = new Date();
 let day, month,year, ConverToXlsx, wbout, libroDeTrabajo;
 let arrIds = [];
 let filas, contadorHoras, z = 0;
-let fecha, hour, minute, second, audio;
+let hour;
 let ident, clase, filHora, colCampo, campoMini, anchoP, anchoM, horaTurno;
 let HTMLProfesor, HTMLMonitor, HTMLInputs;
 let inputAccion, inputNombre, casillaFichero, avtiva1, activa2,valor;
 let contHoja = []; 
 let inc, idTurno;
+let fecha;
 listadoTurnos = [];
 let arrMiembros = new Array(8);
 let arrInvitados = new Array(8);
 let arrProfesores = new Array(4);
 let arrMonitores = new Array(4);
 datosTurno = [];
-prueba=[];
+hora=6;
 arrTurnos=[];
+arrFilas = [];
 idT = cp = hr = s1 = ac1 = s2 = ac2 = s3 = ac3 = s4 = ac4 = i1 = ai1 = i2 = ai2 = i3 = ai3 = i4 = ai4 = p1 = p2 = p3 = p4 = m1 = m2 = m3 = m4 = idC ='';
 encabezadoExcel = ['campo','hora','miembro_1', 'miembro_2','miembro_3','miembro_4','invitado_1', 'invitado_2','invitado_3','invitado_4','profesor_1', 'profesor_2','profesor_3','profesor_4','monitor_1', 'monitor_2','monitor_3','monitor_4','accion'];
 contExcel=[];
@@ -73,17 +75,43 @@ document.addEventListener("DOMContentLoaded", function event() {
         // divs = document.getElementsByTagName("div");
     }
     crearTabla();
+    setInterval(() => {
+        fecha = new Date();
+        hora = fecha.getHours();
+        // hora=6;
+        if(hora>=6 && hora<=19){
+            let i=(hora-5)
+            for(let j=1; j<document.getElementsByTagName('tr').length;j++){
+                if(j>=i && j<=hora-2){
+                    document.getElementsByTagName('tr')[j].style.visibility='visible';
+                    document.getElementsByTagName('tr')[j].style.position='static';
+                }
+                else{
+                    document.getElementsByTagName('tr')[j].style.visibility='hidden';
+                    document.getElementsByTagName('tr')[j].style.position='absolute';
+                }
+            }
+        }
+        else{
+            for(let j=1; j< document.getElementsByTagName('tr').length;j++){
+                document.getElementsByTagName('tr')[j].style.visibility='hidden';
+                document.getElementsByTagName('tr')[j].style.position='absolute';
+            }
+        }
+    },1000);
     if(localStorage.getItem('turnos')){
-        getTurnos();
+        let indice=0;
+        listadoTurnos = JSON.parse(localStorage.getItem('turnos'));
+        imprimirTurnos(listadoTurnos,0);
     }
     window.addEventListener('storage', function() {
-        getTurnos();
+        listadoTurnos = JSON.parse(localStorage.getItem('turnos'));
+        imprimirTurnos(listadoTurnos,listadoTurnos.length-1);
     });
 });
-function getTurnos(){
-    listadoTurnos = JSON.parse(localStorage.getItem('turnos'));
-    imprimirTurnos(listadoTurnos,0);
-}
+// function getTurnos(){
+    
+// }
 function imprimirTurnos(nuevoTurno,ind){
     for(let i=ind;i<listadoTurnos.length;i++){
         if(nuevoTurno[i].miembro_1!=undefined){
@@ -168,3 +196,14 @@ function imprimirTurnos(nuevoTurno,ind){
         }
     }
 }
+// function prueba(){
+//     fecha = new Date();
+//         // hora = fecha.getHours();
+//         hora=19;
+//         if(hora>=6 && hora<=24){
+//             for(let i=(hora-5);i<=hora;i++){
+//                 document.getElementsByTagName('tr')[i].style.visibility='visible';
+//                 document.getElementsByTagName('tr')[i].style.position='static';
+//             }
+//         }
+// }

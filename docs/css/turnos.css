@@ -1,0 +1,76 @@
+@font-face{
+    font-family: 'Baloo', cursive;
+    src: url('../fonts/Baloo-Regular.ttf');
+}
+*{
+    margin:0;
+}
+
+body{
+    font-family: 'Baloo', cursive;
+}
+tr{
+    height:14vh;
+}
+
+table{
+    border-collapse:collapse;
+}
+table tbody tr{
+    position:absolute;
+    visibility:hidden;
+}
+table tbody tr:nth-child(1){
+    position: static;
+    visibility: visible;
+}
+td{
+    /* border:solid black 3px; */
+    text-align: center;
+    height:80px;
+    padding:0;
+    /* overflow: hidden; */
+}
+td > div{
+    display:flex;
+    border:solid burlywood 1px;
+    justify-content: center;
+    align-items: center;
+    width: 3em;
+    height: 100%;
+    font-size:20px;
+}
+
+.miniTenis > div{
+    border: solid burlywood 1px;
+    width:25%;
+    height:100%;
+    background-color:rgb(55, 179, 70); 
+    font-size:20px;
+}
+
+
+.miniTenis{
+    padding:0;
+    display:flex;
+    flex-direction: row;
+    width:10vw;
+    border: solid rgb(199, 222, 135) 1px;
+}
+
+.casillas:hover{
+    background-color:rgb(158, 199, 168) !important;
+}
+
+#fil_0_col_6{
+    width:100%;
+}
+
+/* div[id^="fil_0_col_"]{
+    background-color: rgb(55, 179, 70) !important;
+} */
+/* div[id$="_col_0"]{
+    position: fixed;  
+    height: 120px; 
+    top: 120px
+} */

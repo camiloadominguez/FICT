@@ -10,18 +10,16 @@
         <script src="js/script.js" lang="javascript"></script>
         <script src="https://kit.fontawesome.com/d6479d1ae3.js" crossorigin="anonymous"></script>
         <script src="js/xlsx.full.min.js"></script>
-        <!-- <script lang="javascript" src="js/jquery-3.4.1.min.js"></script>         -->
+        <!-- <script lang="javascript" src="js/jquery-3.4.1.min.js"></script>-->
         <script lang="javascript" src="js/FileSaver.min.js"></script>
         <title>FiCT</title>
     </head>
-    <body>
-        <a href="html/turnos.html" target="_blank">Ir a otra pagina</a>
-        <button id="button-a">Create Excel</button>
-        
+    <body>        
         <div>
-            <table id="campos_y_horas" class="fichero"></table>
+            <table>
+                <tbody id="campos_y_horas" class="fichero"></tbody>
+            </table>
         </div>
-        
         <audio id="aud_timbre1">
             <source src="audio/timbre.mp3" type="audio/mpeg">
         </audio>
@@ -169,5 +167,9 @@
         
     </body>
     <footer>
-        <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div>    </footer>
+        <button id="button-a" onclick="guardarExcel()">Create Excel</button>
+        <input type="date" id="calendario" value="2019-12-01">
+        <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div>
+        <a href="html/turnos.html" target="_blank">Ir a otra pagina</a>
+    </footer>
 </html>
