@@ -22,6 +22,7 @@ datosTurno = [];
 hora=6;
 arrTurnos=[];
 arrFilas = [];
+dia='';
 idT = cp = hr = s1 = ac1 = s2 = ac2 = s3 = ac3 = s4 = ac4 = i1 = ai1 = i2 = ai2 = i3 = ai3 = i4 = ai4 = p1 = p2 = p3 = p4 = m1 = m2 = m3 = m4 = idC ='';
 encabezadoExcel = ['campo','hora','miembro_1', 'miembro_2','miembro_3','miembro_4','invitado_1', 'invitado_2','invitado_3','invitado_4','profesor_1', 'profesor_2','profesor_3','profesor_4','monitor_1', 'monitor_2','monitor_3','monitor_4','accion'];
 contExcel=[];
@@ -99,19 +100,31 @@ document.addEventListener("DOMContentLoaded", function event() {
             }
         }
     },1000);
-    if(localStorage.getItem('turnos')){
-        let indice=0;
-        listadoTurnos = JSON.parse(localStorage.getItem('turnos'));
+    indice=0;
+    dia = localStorage.getItem('dia');
+    if(localStorage.getItem(localStorage.getItem('dia'))){
+        // let indice=0;
+        listadoTurnos = JSON.parse(localStorage.getItem(localStorage.getItem('dia')));
         imprimirTurnos(listadoTurnos,0);
     }
-    window.addEventListener('storage', function() {
-        listadoTurnos = JSON.parse(localStorage.getItem('turnos'));
-        imprimirTurnos(listadoTurnos,listadoTurnos.length-1);
+    window.addEventListener('storage', function(){
+        if(dia!=localStorage.getItem('dia')){
+            dia=localStorage.getItem('dia');
+            for(let i of arrIds){
+                id_DOM(i).innerHTML="";
+                id_DOM(i).title="";
+            }
+            indice=0;
+        }
+        else{
+            indice=listadoTurnos.length;
+        }
+        if(localStorage.getItem(localStorage.getItem('dia'))){
+            listadoTurnos = JSON.parse(localStorage.getItem(localStorage.getItem('dia')));
+            imprimirTurnos(listadoTurnos,indice);
+        }
     });
 });
-// function getTurnos(){
-    
-// }
 function imprimirTurnos(nuevoTurno,ind){
     for(let i=ind;i<listadoTurnos.length;i++){
         if(nuevoTurno[i].miembro_1!=undefined){

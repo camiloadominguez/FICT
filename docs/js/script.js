@@ -64,6 +64,7 @@ document.addEventListener("DOMContentLoaded", function event() {
     
     dia = fechaActual();
     id_DOM('calendario').value = dia;
+    localStorage.setItem('dia',dia);
     crearTabla();
     HTMLPyM();
     recorrerJson();
@@ -72,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function event() {
     }
     id_DOM('calendario').addEventListener('change',(event)=>{
         dia = id_DOM(event.target.id).value;
+        localStorage.setItem('dia',dia);
         listadoTurnos=[];
         for(let i of arrIds){
             id_DOM(i).innerHTML="";
