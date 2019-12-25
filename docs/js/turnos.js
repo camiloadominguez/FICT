@@ -209,14 +209,3 @@ function imprimirTurnos(nuevoTurno,ind){
         }
     }
 }
-// function prueba(){
-//     fecha = new Date();
-//         // hora = fecha.getHours();
-//         hora=19;
-//         if(hora>=6 && hora<=24){
-//             for(let i=(hora-5);i<=hora;i++){
-//                 document.getElementsByTagName('tr')[i].style.visibility='visible';
-//                 document.getElementsByTagName('tr')[i].style.position='static';
-//             }
-//         }
-// }
