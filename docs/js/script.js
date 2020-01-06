@@ -690,14 +690,14 @@ const fechaActual = () =>{
     inc++;
     day = (fechaExcel.getDate()).toString();
     month=fechaExcel.getMonth()+1;
+    month = month.toString();
     year= fechaExcel.getFullYear();
     if(day.length==1){
         day= '0'+day;
-        dia = year+'-'+month+'-'+day
     }
-    else
-    {
-        dia = year+'-'+month+'-'+day
+    if(month.length==1){
+        month = '0'+month;
     }
+    dia = year+'-'+month+'-'+day
     return dia;
 }
